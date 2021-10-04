@@ -1,7 +1,7 @@
 export default class Scene {
   geometries = [];
   static change = 0;
-  static speed = 0.0015;
+  static speed = 0.0065;
 
   constructor(domElement) {
     this.context = domElement.getContext("webgl");
@@ -28,9 +28,9 @@ export default class Scene {
       attribute vec3 aCoordinates;
       attribute vec3 aColor;
       varying vec3 vColor;
-      uniform float uChange;
+      uniform mat4 uChange;
       void main(){
-        gl_Position = vec4(aCoordinates.x,aCoordinates.y + uChange, aCoordinates.z, 1.0);
+        gl_Position = uChange * vec4(aCoordinates, 1.0);
         vColor = aColor;
       }
     `;
@@ -44,7 +44,8 @@ export default class Scene {
 
   _createFragmentShader() {
     let fragmentShaderCode = `
-      varying mediump vec3 vColor;
+    precision mediump float;  
+    varying vec3 vColor;
       void main(){
           gl_FragColor = vec4(vColor , 1);
       }`;
@@ -65,6 +66,10 @@ export default class Scene {
       this.context.ARRAY_BUFFER,
       arrayToBePushed,
       this.context.STATIC_DRAW
+    );
+    this.uChange = this.context.getUniformLocation(
+      this.shaderProgram,
+      "uChange"
     );
 
     let coordinate = this.context.getAttribLocation(
@@ -107,10 +112,21 @@ export default class Scene {
 
   render() {
     let vertices = [];
-    let uChange = this.context.getUniformLocation(
-      this.shaderProgram,
-      "uChange"
-    );
+
+    // prettier-ignore
+    const leftObject = [
+      1.0, 0.0, 0.0, 0.0, 
+      0.0, 1.0, 0.0, 0.0, 
+      0.0, 0.0, 1.0, 0.0, 
+      0.0, 0.0, 0.0, 1.0, 
+    ];
+    // prettier-ignore
+    const rightObject = [
+      1.0, 0.0, 0.0, 0.0, 
+      0.0, 1.0, 0.0, 0.0, 
+      0.0, 0.0, 1.0, 0.0, 
+      0.0, Scene.change, 0.0, 1.0, 
+    ]
 
     this.geometries.forEach((geometry) => {
       vertices.push(...geometry.getVerticeArray());
@@ -118,15 +134,23 @@ export default class Scene {
 
     vertices = new Float32Array([...vertices]);
 
-    this._bindArrayInsideShader(vertices, "aCoordinates", "aColor");
-
     if (Scene.change < -0.3 || Scene.change >= 0.25) Scene.speed = -Scene.speed;
     Scene.change += Scene.speed;
-    this.context.uniform1f(uChange, Scene.change);
 
-    this.context.clearColor(0.4, 0.5, 0.35, 1.0);
+    this.context.uniform1f(this.uChange, Scene.change);
+
+    this._bindArrayInsideShader(vertices, "aCoordinates", "aColor");
+
+    this.context.clearColor(0.3, 0.0, 0.7, 1.0);
     this.context.clear(this.context.COLOR_BUFFER_BIT);
 
-    this.context.drawArrays(this.context.TRIANGLES, 0, vertices.length / 3);
+    // Draw Left Object
+    this.context.uniformMatrix4fv(this.uChange, false, leftObject);
+    this.context.drawArrays(this.context.TRIANGLES, 0, 72);
+
+    // Draw Right Object
+    this.context.uniformMatrix4fv(this.uChange, false, rightObject);
+    this.context.drawArrays(this.context.TRIANGLES, 72, 138);
   }
 }
+// Geometry 2 mulai index 432

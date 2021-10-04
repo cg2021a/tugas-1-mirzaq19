@@ -146,16 +146,7 @@ function main() {
   geometry1.addFace(new Face(18, 20, 21));
   geometry1.addFace(new Face(18, 21, 15));
 
-  // // // Rounded Wadah Kanan bawah (22-25)
-  // geometry1.addVertice(new Vector(-0.268, -0.65), new Color(0.1, 0.1, 0.1)); // Rounded Center
-  // geometry1.addVertice(new Vector(-0.268, -0.7), new Color(0.1, 0.1, 0.1));
-  // geometry1.addVertice(new Vector(-0.26, -0.695), new Color(0.1, 0.1, 0.1));
-  // geometry1.addVertice(new Vector(-0.253, -0.68), new Color(0.1, 0.1, 0.1));
-  // geometry1.addFace(new Face(22, 23, 24));
-  // geometry1.addFace(new Face(22, 24, 25));
-  // geometry1.addFace(new Face(22, 25, 16));
-
-  // // Rounded Wadah Kanan bawah (22-25)
+  // Rounded Wadah Kanan bawah (22-25)
   geometry1.addVertice(new Vector(0.62, -0.65), new Color(0.1, 0.1, 0.1)); // Rounded Center
   geometry1.addVertice(new Vector(0.62, -0.7), new Color(0.1, 0.1, 0.1));
   geometry1.addVertice(new Vector(0.628, -0.695), new Color(0.1, 0.1, 0.1));
@@ -164,7 +155,7 @@ function main() {
   geometry1.addFace(new Face(22, 24, 25));
   geometry1.addFace(new Face(22, 25, 16));
 
-  // // Pelengkap Wadah
+  // Pelengkap Wadah
   geometry1.addFace(new Face(18, 19, 22));
   geometry1.addFace(new Face(22, 23, 19));
 
