@@ -17,3 +17,9 @@
 ## Tampak Kanan Atas
 
 ![Tampakkanan](./images/kanan.jpg)
+
+## Hasil Jadi
+
+Foto yang dipakai dalam pembuatan object dengan webgl adalah foto kotak parfum untuk tampak depan dan kiri. Hasil jadinya dapat dilihat pada gambar di bawah ini
+
+![HasilJadi](./images/hasil-tugas1.gif)
