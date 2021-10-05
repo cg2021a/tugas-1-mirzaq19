@@ -163,6 +163,21 @@ function main() {
   // ========= End Right Object =============
 }
 
+function onMouseClick() {
+  scene.freeze = !scene.freeze;
+}
+document.addEventListener("click", onMouseClick, false);
+
+function onKeyDown(e) {
+  if (e.keyCode == 32) scene.freeze = true;
+}
+function onKeyUp(e) {
+  if (e.keyCode == 32) scene.freeze = false;
+}
+
+document.addEventListener("keydown", onKeyDown, false);
+document.addEventListener("keyup", onKeyUp, false);
+
 function update() {
   scene.render();
 }

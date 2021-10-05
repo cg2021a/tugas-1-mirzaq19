@@ -1,7 +1,8 @@
 export default class Scene {
   geometries = [];
-  static change = 0;
-  static speed = 0.0065;
+  change = 0.0;
+  speed = 0.0065;
+  freeze = false;
 
   constructor(domElement) {
     this.context = domElement.getContext("webgl");
@@ -44,11 +45,12 @@ export default class Scene {
 
   _createFragmentShader() {
     let fragmentShaderCode = `
-    precision mediump float;  
-    varying vec3 vColor;
+      precision mediump float;  
+      varying vec3 vColor;
       void main(){
-          gl_FragColor = vec4(vColor , 1);
-      }`;
+        gl_FragColor = vec4(vColor , 1.0);
+      }
+    `;
 
     let fragmentShader = this.context.createShader(
       this.context.FRAGMENT_SHADER
@@ -125,7 +127,7 @@ export default class Scene {
       1.0, 0.0, 0.0, 0.0, 
       0.0, 1.0, 0.0, 0.0, 
       0.0, 0.0, 1.0, 0.0, 
-      0.0, Scene.change, 0.0, 1.0, 
+      0.0, this.change, 0.0, 1.0, 
     ]
 
     this.geometries.forEach((geometry) => {
@@ -134,10 +136,8 @@ export default class Scene {
 
     vertices = new Float32Array([...vertices]);
 
-    if (Scene.change < -0.3 || Scene.change >= 0.25) Scene.speed = -Scene.speed;
-    Scene.change += Scene.speed;
-
-    this.context.uniform1f(this.uChange, Scene.change);
+    if (this.change < -0.3 || this.change >= 0.25) this.speed = -this.speed;
+    if (!this.freeze) this.change += this.speed;
 
     this._bindArrayInsideShader(vertices, "aCoordinates", "aColor");
 
