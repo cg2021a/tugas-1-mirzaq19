@@ -2,7 +2,6 @@ export default class Scene {
   geometries = [];
   change = 0.0;
   speed = 0.0065;
-  freeze = false;
 
   constructor(domElement) {
     this.canvas = domElement;
@@ -138,7 +137,7 @@ export default class Scene {
     vertices = new Float32Array([...vertices]);
 
     if (this.change < -0.3 || this.change >= 0.25) this.speed = -this.speed;
-    if (!this.freeze) this.change += this.speed;
+    this.change += this.speed;
 
     this._bindArrayInsideShader(vertices, "aCoordinates", "aColor");
 
