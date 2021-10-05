@@ -5,6 +5,7 @@ export default class Scene {
   freeze = false;
 
   constructor(domElement) {
+    this.canvas = domElement;
     this.context = domElement.getContext("webgl");
 
     if (this.context === null) {
@@ -151,6 +152,7 @@ export default class Scene {
     // Draw Right Object
     this.context.uniformMatrix4fv(this.uChange, false, rightObject);
     this.context.drawArrays(this.context.TRIANGLES, 72, 138);
+    this.context.viewport(0, 0, this.canvas.width, this.canvas.height);
   }
 }
 // Geometry 2 mulai index 432
