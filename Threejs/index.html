@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+      integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <link rel="stylesheet" href="style.css" />
+    <title>Tugas Three.js Geometry dan Lighting</title>
+  </head>
+  <body>
+    <h1 class="judul">
+      Tugas Grafkom Three.js: Geometry, Material dan Lighting
+    </h1>
+    <section class="preview-canvas">
+      <canvas class="webgl"> Browser tidak mendukung HTML 5 </canvas>
+      <script src="script.js"></script>
+    </section>
+    <section class="lighting-conf">
+      <h2 class="judul">Lighting</h2>
+      <p>Pilih jenis lighting untuk <i>object</i></p>
+      <div class="lighting-choices">
+        <div class="choice">
+          <input type="radio" name="lighting" id="ambient" value="0" />
+          <label for="ambient">Ambient Light</label>
+        </div>
+        <div class="choice">
+          <input type="radio" name="lighting" id="hemisphere" value="0" />
+          <label for="hemisphere">Hemisphere Light</label>
+        </div>
+        <div class="choice">
+          <input type="radio" name="lighting" id="directional" value="0" />
+          <label for="directional">Directional Light</label>
+        </div>
+        <div class="choice">
+          <input type="radio" name="lighting" id="point" value="0" />
+          <label for="point">Point Light</label>
+        </div>
+        <div class="choice">
+          <input type="radio" name="lighting" id="spot" value="0" />
+          <label for="spot">Spot Light</label>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
