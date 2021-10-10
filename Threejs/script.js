@@ -5,14 +5,14 @@ const canvas = document.querySelector("canvas.webgl");
 const scene = new THREE.Scene();
 
 //=========== Lighting
-const ambient = new THREE.AmbientLight();
+const ambient = new THREE.AmbientLight(0xffffbb, 1);
 const hemisphere = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
-const directional = new THREE.DirectionalLight(0xffffff, 2);
+const directional = new THREE.DirectionalLight(0xffffff, 1.2);
 directional.position.set(50, 50, 50);
 const point = new THREE.PointLight(0xffffff, 5, 100);
 point.position.set(50, 50, 50);
 const spot = new THREE.SpotLight(0xffffff);
-spot.position.set(100, 1000, 100);
+spot.position.set(50, 50, 50);
 
 const arrLight = [ambient, hemisphere, directional, point, spot];
 
@@ -38,7 +38,7 @@ lightOption.forEach((option) => {
 
 //========== Texture Loader
 const textureLoader = new THREE.TextureLoader();
-const brickTexture = textureLoader.load("brick-pattern.png");
+const brickTexture = textureLoader.load("brick.jpg");
 
 //=========== Buat Geometry
 // 1. Cube
@@ -94,7 +94,7 @@ sphere.position.x += 9;
 // 8. CubeBrickTexture
 const cubeBrick = new THREE.Mesh(
   new THREE.BoxGeometry(3, 3, 3),
-  new THREE.MeshStandardMaterial({ color: 0x00fff0, normalMap: brickTexture })
+  new THREE.MeshStandardMaterial({ color: 0xc70e33, normalMap: brickTexture })
 );
 cubeBrick.position.x += 14;
 cubeBrick.position.y += 10;
