@@ -1,22 +1,10 @@
-// Canvas
+//========== Canvas
 const canvas = document.querySelector("canvas.webgl");
 
-// Buat Scene
+//========== Buat Scene
 const scene = new THREE.Scene();
 
-// Pengaturan Camera
-const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  100
-);
-camera.position.x = 0;
-camera.position.y = 0;
-camera.position.z = 20;
-scene.add(camera);
-
-// Buat Geometry
+//=========== Buat Geometry
 // 1. Cube
 const cube = new THREE.Mesh(
   new THREE.BoxGeometry(3, 3, 3),
@@ -71,17 +59,51 @@ sphere.position.x += 9;
 
 const arrGeo = [cube, cone, cylinder, decohedron, torus, torusKnot, sphere];
 
-// Input geometri
+//=========== Input geometri
 arrGeo.forEach((geo) => {
   scene.add(geo);
 });
 
-//Render
+// ====== Sizes
+const sizes = {
+  width: window.innerWidth,
+  height: window.innerHeight,
+};
+
+window.addEventListener("resize", () => {
+  // Update sizes
+  sizes.width = window.innerWidth;
+  sizes.height = window.innerHeight;
+
+  // Update camera
+  camera.aspect = sizes.width / sizes.height;
+  camera.updateProjectionMatrix();
+
+  // Update renderer
+  renderer.setSize(sizes.width, sizes.height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+});
+
+//========= Pengaturan Camera
+const camera = new THREE.PerspectiveCamera(
+  75,
+  sizes.width / sizes.height,
+  0.1,
+  100
+);
+camera.position.x = 0;
+camera.position.y = 0;
+camera.position.z = 25;
+scene.add(camera);
+
+//============= Render
+
 const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
   alpha: true,
 });
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(sizes.width, sizes.height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 // Interactive animation
 let mouseX = 0;
