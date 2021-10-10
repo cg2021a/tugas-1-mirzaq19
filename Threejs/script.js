@@ -134,7 +134,7 @@ window.addEventListener("resize", () => {
   camera.updateProjectionMatrix();
 
   // Update renderer
-  renderer.setSize(sizes.width, sizes.height);
+  renderer.setSize(0.85 * sizes.width, 0.85 * sizes.height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
 
@@ -157,7 +157,7 @@ const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
   alpha: true,
 });
-renderer.setSize(sizes.width, sizes.height);
+renderer.setSize(0.85 * sizes.width, 0.85 * sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 // Interactive animation

@@ -47,3 +47,16 @@ label {
 .choice {
   margin: 0 20px;
 }
+
+.preview-canvas {
+  position: relative;
+}
+
+.webgl {
+  position: absolute;
+  margin: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 0%);
+  border-radius: 10px;
+}
