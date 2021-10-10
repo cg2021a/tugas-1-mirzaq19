@@ -39,3 +39,11 @@ label {
   flex-direction: column;
   text-align: center;
 }
+
+.choices {
+  margin: 20px 0;
+}
+
+.choice {
+  margin: 0 20px;
+}

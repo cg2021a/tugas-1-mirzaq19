@@ -18,35 +18,35 @@
     <h1 class="judul">
       Tugas Grafkom Three.js: Geometry, Material dan Lighting
     </h1>
-    <section class="preview-canvas">
-      <canvas class="webgl"> Browser tidak mendukung HTML 5 </canvas>
-      <script src="script.js"></script>
-    </section>
     <section class="lighting-conf">
       <h2 class="judul">Lighting</h2>
       <p>Pilih jenis lighting untuk <i>object</i></p>
-      <div class="lighting-choices">
-        <div class="choice">
+      <div class="choices">
+        <span class="choice">
           <input type="radio" name="lighting" id="ambient" value="0" />
           <label for="ambient">Ambient Light</label>
-        </div>
-        <div class="choice">
-          <input type="radio" name="lighting" id="hemisphere" value="0" />
+        </span>
+        <span class="choice">
+          <input type="radio" name="lighting" id="hemisphere" value="1" />
           <label for="hemisphere">Hemisphere Light</label>
-        </div>
-        <div class="choice">
-          <input type="radio" name="lighting" id="directional" value="0" />
+        </span>
+        <span class="choice">
+          <input type="radio" name="lighting" id="directional" value="2" />
           <label for="directional">Directional Light</label>
-        </div>
-        <div class="choice">
-          <input type="radio" name="lighting" id="point" value="0" />
+        </span>
+        <span class="choice">
+          <input type="radio" name="lighting" id="point" value="3" />
           <label for="point">Point Light</label>
-        </div>
-        <div class="choice">
-          <input type="radio" name="lighting" id="spot" value="0" />
+        </span>
+        <span class="choice">
+          <input type="radio" name="lighting" id="spot" value="4" />
           <label for="spot">Spot Light</label>
-        </div>
+        </span>
       </div>
+    </section>
+    <section class="preview-canvas">
+      <canvas class="webgl"> Browser tidak mendukung HTML 5 </canvas>
+      <script src="script.js"></script>
     </section>
   </body>
 </html>
