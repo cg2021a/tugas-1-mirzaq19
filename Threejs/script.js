@@ -1,3 +1,6 @@
+import * as THREE from "./node_modules/three/src/Three.js";
+import { OrbitControls } from "./node_modules/three/examples/jsm/controls/OrbitControls.js";
+
 //========== Canvas
 const canvas = document.querySelector("canvas.webgl");
 
@@ -143,6 +146,10 @@ const camera = new THREE.PerspectiveCamera(
   100
 );
 camera.position.set(0, 0, 25);
+
+const controls = new OrbitControls(camera, canvas);
+controls.target.set(0, 5, 0);
+controls.update();
 
 //============= Render
 
