@@ -4,20 +4,56 @@ const canvas = document.querySelector("canvas.webgl");
 //========== Buat Scene
 const scene = new THREE.Scene();
 
+//=========== Lighting
+const ambient = new THREE.AmbientLight();
+const hemisphere = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
+const directional = new THREE.DirectionalLight(0xffffff, 2);
+directional.position.set(50, 50, 50);
+const point = new THREE.PointLight(0xffffff, 5, 100);
+point.position.set(50, 50, 50);
+const spot = new THREE.SpotLight(0xffffff);
+spot.position.set(100, 1000, 100);
+
+const arrLight = [ambient, hemisphere, directional, point, spot];
+
+//input lighting
+arrLight.forEach((light) => {
+  scene.add(light);
+  light.visible = false;
+});
+arrLight[0].visible = true;
+
+//Interactive lighting
+const lightOption = document.querySelectorAll('input[name="lighting"]');
+lightOption[0].checked = true;
+lightOption.forEach((option) => {
+  option.addEventListener("change", () => {
+    console.log(option.value);
+    arrLight.forEach((light) => {
+      light.visible = false;
+    });
+    arrLight[option.value].visible = true;
+  });
+});
+
+//========== Texture Loader
+const textureLoader = new THREE.TextureLoader();
+const brickTexture = textureLoader.load("brick-pattern.png");
+
 //=========== Buat Geometry
 // 1. Cube
 const cube = new THREE.Mesh(
   new THREE.BoxGeometry(3, 3, 3),
   new THREE.MeshBasicMaterial({ color: 0x00fff0, wireframe: true })
 );
-cube.position.x += -12;
+cube.position.x += -14;
 cube.position.y += 10;
 // 2. Cone
 const cone = new THREE.Mesh(
   new THREE.ConeGeometry(2.5, 5, 10, 1),
-  new THREE.MeshBasicMaterial({ color: 0xffff00 })
+  new THREE.MeshLambertMaterial({ color: 0xffff00 })
 );
-cone.position.x += -4;
+cone.position.x += -7;
 cone.position.y += 10;
 
 // 3. Cylinder
@@ -25,39 +61,54 @@ const cylinder = new THREE.Mesh(
   new THREE.CylinderGeometry(2, 2, 5, 10),
   new THREE.MeshBasicMaterial({ color: 0xff00ff, wireframe: true })
 );
-cylinder.position.x += 4;
 cylinder.position.y += 10;
 
 //4. Dodecahedron
 const decohedron = new THREE.Mesh(
   new THREE.DodecahedronGeometry(2.5, 0),
-  new THREE.MeshBasicMaterial({ color: 0x00ffff })
+  new THREE.MeshStandardMaterial({ color: 0x00ffff })
 );
-decohedron.position.x += 11;
+decohedron.position.x += 6;
 decohedron.position.y += 10;
 
 //5. Torus
 const torus = new THREE.Mesh(
   new THREE.TorusGeometry(2, 0.8, 16, 50),
-  new THREE.MeshBasicMaterial({ color: 0x9400d3 })
+  new THREE.MeshPhongMaterial({ color: 0x9400d3, flatShading: true })
 );
 torus.position.x += -11;
 
 //6. Torus Knot
 const torusKnot = new THREE.Mesh(
   new THREE.TorusKnotGeometry(2, 0.5, 120, 12, 6, 10),
-  new THREE.MeshBasicMaterial({ color: 0x76ee00 })
+  new THREE.MeshPhongMaterial({ color: 0x76ee00, flatShading: true })
 );
 torusKnot.position.x += -1;
 
 //7. Sphere
 const sphere = new THREE.Mesh(
   new THREE.SphereGeometry(3, 12, 11),
-  new THREE.MeshBasicMaterial({ color: 0xffa200 })
+  new THREE.MeshPhongMaterial({ color: 0xffa200, flatShading: true })
 );
 sphere.position.x += 9;
+// 8. CubeBrickTexture
+const cubeBrick = new THREE.Mesh(
+  new THREE.BoxGeometry(3, 3, 3),
+  new THREE.MeshStandardMaterial({ color: 0x00fff0, normalMap: brickTexture })
+);
+cubeBrick.position.x += 14;
+cubeBrick.position.y += 10;
 
-const arrGeo = [cube, cone, cylinder, decohedron, torus, torusKnot, sphere];
+const arrGeo = [
+  cube,
+  cone,
+  cylinder,
+  decohedron,
+  torus,
+  torusKnot,
+  sphere,
+  cubeBrick,
+];
 
 //=========== Input geometri
 arrGeo.forEach((geo) => {
@@ -91,10 +142,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   100
 );
-camera.position.x = 0;
-camera.position.y = 0;
-camera.position.z = 25;
-scene.add(camera);
+camera.position.set(0, 0, 25);
 
 //============= Render
 
@@ -126,8 +174,8 @@ const mainLoop = () => {
     geo.rotation.x = 0.7 * elapsedTime;
     geo.rotation.y = 0.7 * elapsedTime;
 
-    geo.rotation.x += mouseX;
-    geo.rotation.y += mouseY;
+    geo.rotation.x += mouseY;
+    geo.rotation.y += mouseX;
   });
 
   if (torus.position.y > 2 || torus.position.y <= -5) {
