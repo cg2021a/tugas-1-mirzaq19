@@ -1,5 +1,7 @@
 # Tugas 1
 
+Link tugas Threejs: https://cg2021a.github.io/tugas-1-mirzaq19/Threejs/
+
 ### Nama benda yang saya pilih: **Kotak Parfum**
 
 ## Tampak Depan Atas
