@@ -1,6 +1,6 @@
 # Tugas 1
 
-Link tugas Threejs: https://cg2021a.github.io/tugas-1-mirzaq19/Threejs/
+Link tugas Threejs: https://cg2021a.github.io/tugas-1-mirzaq19/Threejs/tugas-threejs-1/
 
 ### Nama benda yang saya pilih: **Kotak Parfum**
 
@@ -22,6 +22,6 @@ Link tugas Threejs: https://cg2021a.github.io/tugas-1-mirzaq19/Threejs/
 
 ## Hasil Jadi
 
-Foto yang dipakai dalam pembuatan object dengan webgl adalah foto kotak parfum untuk tampak depan dan kiri. Kecepatan animasi sesuai dengan NRP yaitu **0.0065**. Hasil jadinya dapat dilihat pada gambar di bawah ini atau dengan mengakses tautan berikut https://cg2021a.github.io/tugas-1-mirzaq19/gambar-barang/
+Foto yang dipakai dalam pembuatan object dengan webgl adalah foto kotak parfum untuk tampak depan dan kiri. Kecepatan animasi sesuai dengan NRP yaitu **0.0065**. Hasil jadinya dapat dilihat pada gambar di bawah ini atau dengan mengakses tautan berikut https://cg2021a.github.io/tugas-1-mirzaq19/webgl/
 
 ![HasilJadi](./images/hasil-tugas1.gif)
