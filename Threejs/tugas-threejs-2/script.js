@@ -2,7 +2,6 @@ const SELECT = document.querySelector("#seleksi");
 const SCORE = document.querySelector("#score");
 const PLAY_BUTTON = document.querySelector("#play-button");
 const GAMEOVER = document.querySelector("#gameover");
-const OBJECT_TOTAL = 50;
 //========== Canvas
 const canvas = document.querySelector("canvas.webgl");
 
@@ -61,8 +60,8 @@ PLAY_BUTTON.addEventListener("click", () => {
   spawnSpeed = 0.005;
   bufferSpeed = 0;
   visibles = [];
+  currentColor = 0;
   notVisibles = numberInRange(2, OBJECT_TOTAL + 1);
-  // for (let i = 2; i <= OBJECT_TOTAL + 1; i++) scene.children[i].visible = false;
 
   for (; scene.children.length > 2; ) {
     scene.remove(scene.children[2]);

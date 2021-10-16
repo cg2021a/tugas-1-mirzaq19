@@ -1,6 +1,6 @@
-const numberInRange = (from, to) => {
+const numberInRange = (from, to, increment = 1) => {
   let arr = [];
-  for (let i = from; i <= to; i++) {
+  for (let i = from; i <= to; i += increment) {
     arr.push(i);
   }
   return arr;
@@ -28,8 +28,13 @@ const createCube = (color = Math.random() * 0xffffff) => {
   return cube;
 };
 
+const OBJECT_TOTAL = 50;
+let colorSet = numberInRange(0, 1, 1 / (OBJECT_TOTAL / 2));
+let currentColor = 0;
+
 const createCouple = () => {
-  const randomColor = Math.random() * 0xffffff;
+  const randomColor = colorSet[currentColor] * 0xffffff;
+  currentColor++;
   const couple = [];
   couple.push(createCube(randomColor), createCube(randomColor));
   return couple;
