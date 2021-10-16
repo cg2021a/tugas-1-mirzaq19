@@ -67,6 +67,8 @@ const mouse = new THREE.Vector2();
 mouse.x = mouse.y = -1;
 
 //=========== Interactive Action
+let selected = [];
+
 // const pointControls = new THREE.PointerLockControls(
 //   camera,
 //   renderer.domElement
@@ -86,12 +88,30 @@ canvas.addEventListener("click", (e) => {
   mouse.x = (e.offsetX / sizes.width) * 2 - 1;
   mouse.y = -(e.offsetY / sizes.height) * 2 + 1;
   rayCast.setFromCamera(mouse, camera);
-  let intersects = rayCast.intersectObjects(scene.children, false);
-  intersects.forEach((obj) => {
-    console.log(obj);
-    obj.object.material.color.set(0x00ff00);
-  });
-  // console.log(mouse);
+  let items = rayCast.intersectObjects(scene.children, false);
+  if (items.length) {
+    selected.push(items[0].object);
+    items[0].object.material.color.set(0xffffff);
+  }
+
+  if (selected.length == 2) {
+    console.log(selected);
+    if (selected[0].coupleColor == selected[1].coupleColor) {
+      console.log("cocok");
+      selected.forEach((select) => {
+        select.visible = false;
+      });
+    } else {
+      console.log("salah");
+      selected.forEach((select) => {
+        select.material.color.set(select.coupleColor);
+      });
+    }
+    selected = [];
+  }
+
+  // console.log(selected);
+  console.log(scene.children);
 });
 
 // const processingKeyboard = (delta) => {
