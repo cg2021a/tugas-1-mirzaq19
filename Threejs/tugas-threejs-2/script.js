@@ -2,6 +2,7 @@ const SELECT = document.querySelector("#seleksi");
 const SCORE = document.querySelector("#score");
 const PLAY_BUTTON = document.querySelector("#play-button");
 const GAMEOVER = document.querySelector("#gameover");
+const OBJECT_TOTAL = 50;
 //========== Canvas
 const canvas = document.querySelector("canvas.webgl");
 
@@ -12,16 +13,6 @@ scene.background = new THREE.Color(0xbffffb);
 //========== Create Lighting
 scene.add(new THREE.DirectionalLight(0xffffff, 0.8));
 scene.add(new THREE.AmbientLight(0xffffbb, 0.5));
-
-//========== Create Geometry
-const OBJECT_TOTAL = 50;
-let copBuffer;
-for (let i = 0; i < OBJECT_TOTAL / 2; i++) {
-  copBuffer = createCouple();
-  // console.log(copBuffer);
-  scene.add(copBuffer[0]);
-  scene.add(copBuffer[1]);
-}
 
 // ====== Sizing
 const sizes = {
@@ -71,8 +62,24 @@ PLAY_BUTTON.addEventListener("click", () => {
   bufferSpeed = 0;
   visibles = [];
   notVisibles = numberInRange(2, OBJECT_TOTAL + 1);
+  // for (let i = 2; i <= OBJECT_TOTAL + 1; i++) scene.children[i].visible = false;
+
+  for (; scene.children.length > 2; ) {
+    scene.remove(scene.children[2]);
+  }
+
+  //========== Create Geometry
+  let copBuffer;
+  for (let i = 0; i < OBJECT_TOTAL / 2; i++) {
+    copBuffer = createCouple();
+    // console.log(copBuffer);
+    scene.add(copBuffer[0]);
+    scene.add(copBuffer[1]);
+  }
+
   PLAY_BUTTON.disabled = true;
   SCORE.innerHTML = 0;
+  SELECT.innerHTML = 0;
   GAMEOVER.style.display = "none";
 });
 
@@ -113,7 +120,7 @@ canvas.addEventListener("click", (e) => {
           select.visible = false;
           select.material.color.set(select.coupleColor);
           select.click = false;
-          for (let i = 2; i < OBJECT_TOTAL + 1; i++) {
+          for (let i = 2; i <= OBJECT_TOTAL + 1; i++) {
             if (scene.children[i] === select) {
               console.log("ketemu");
               for (let j = 0; j < visibles.length; j++) {
