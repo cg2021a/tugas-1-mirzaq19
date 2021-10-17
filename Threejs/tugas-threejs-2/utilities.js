@@ -13,6 +13,24 @@ const randomInRange = (from, to, convertInt = false) => {
   return x + from;
 };
 
+const searchIndex = (arr, num) => {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] == num) return i;
+  }
+};
+
+const selectObject = (intersect, selected) => {
+  let selectFirstItem = true;
+  intersect.forEach((item) => {
+    if (item.object.visible && !item.object.click && selectFirstItem) {
+      selected.push(item.object);
+      item.object.material.color.set(0xffffff);
+      item.object.click = true;
+      selectFirstItem = false;
+    }
+  });
+};
+
 const createCube = (color = Math.random() * 0xffffff) => {
   const cube = new THREE.Mesh(
     new THREE.BoxGeometry(3, 3, 3),

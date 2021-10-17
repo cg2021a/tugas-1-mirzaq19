@@ -1,7 +1,9 @@
+//========== DOM
 const SELECT = document.querySelector("#seleksi");
 const SCORE = document.querySelector("#score");
 const PLAY_BUTTON = document.querySelector("#play-button");
 const GAMEOVER = document.querySelector("#gameover");
+
 //========== Canvas
 const canvas = document.querySelector("canvas.webgl");
 
@@ -47,13 +49,15 @@ const mouse = new THREE.Vector2();
 mouse.x = mouse.y = -1;
 
 //=========== Interactive Action
-let gameOver = true;
-let selected = [];
-let spawnSpeed = 0.005;
-let bufferSpeed = 0;
-let visibles = [];
-let notVisibles = numberInRange(2, OBJECT_TOTAL + 1);
+let gameOver,
+  copBuffer,
+  selected = [],
+  spawnSpeed,
+  bufferSpeed,
+  visibles = [],
+  notVisibles = [];
 
+// Mulai game ketika play button ditekan;
 PLAY_BUTTON.addEventListener("click", () => {
   gameOver = false;
   selected = [];
@@ -68,10 +72,10 @@ PLAY_BUTTON.addEventListener("click", () => {
   }
 
   //========== Create Geometry
-  let copBuffer;
-  for (let i = 0; i < OBJECT_TOTAL / 2; i++) {
+  for (let i = 1; i <= OBJECT_TOTAL / 2; i++) {
     copBuffer = createCouple();
-    // console.log(copBuffer);
+    copBuffer[0].sceneIndex = 2 * i;
+    copBuffer[1].sceneIndex = 2 * i + 1;
     scene.add(copBuffer[0]);
     scene.add(copBuffer[1]);
   }
@@ -82,6 +86,7 @@ PLAY_BUTTON.addEventListener("click", () => {
   GAMEOVER.style.display = "none";
 });
 
+// Sizing canvas
 window.addEventListener("resize", () => {
   // Update sizes
   sizes.width = 0.9 * window.innerWidth;
@@ -97,57 +102,48 @@ window.addEventListener("resize", () => {
 });
 
 canvas.addEventListener("click", (e) => {
+  // Manipulasi ketika belum gameOver
   if (!gameOver) {
     mouse.x = (e.offsetX / sizes.width) * 2 - 1;
     mouse.y = -(e.offsetY / sizes.height) * 2 + 1;
     rayCast.setFromCamera(mouse, camera);
-    let items = rayCast.intersectObjects(scene.children, false);
-    let selectFirstItem = true;
-    items.forEach((item) => {
-      if (item.object.visible && !item.object.click && selectFirstItem) {
-        selected.push(item.object);
-        item.object.material.color.set(0xffffff);
-        item.object.click = true;
-        selectFirstItem = false;
-      }
-    });
 
+    //Select Object
+    let intersect = rayCast.intersectObjects(scene.children, false);
+    selectObject(intersect, selected);
+
+    //Cek pasangan yang diseleksi
     if (selected.length == 2) {
       if (selected[0].coupleColor == selected[1].coupleColor) {
         console.log("cocok");
-        selected.forEach((select) => {
-          select.visible = false;
-          select.material.color.set(select.coupleColor);
-          select.click = false;
-          for (let i = 2; i <= OBJECT_TOTAL + 1; i++) {
-            if (scene.children[i] === select) {
-              console.log("ketemu");
-              for (let j = 0; j < visibles.length; j++) {
-                if (visibles[j] == i) {
-                  notVisibles.push(visibles.splice(j, 1));
-                  break;
-                }
-              }
-              break;
-            }
-          }
+        selected.forEach((item) => {
+          item.visible = false;
+          item.material.color.set(item.coupleColor);
+          item.click = false;
+          notVisibles.push(
+            ...visibles.splice(searchIndex(visibles, item.sceneIndex), 1)
+          );
         });
         SCORE.innerHTML++;
       } else {
         console.log("salah");
-        selected.forEach((select) => {
-          select.material.color.set(select.coupleColor);
-          select.click = false;
+        selected.forEach((item) => {
+          item.material.color.set(item.coupleColor);
+          item.click = false;
         });
       }
       selected = [];
     }
+
     SELECT.innerHTML = selected.length;
   }
 });
 
 const mainLoop = () => {
+  // Cek gameover
   if (!gameOver) bufferSpeed += spawnSpeed;
+
+  // Object Spawning
   if (bufferSpeed >= 1 && notVisibles.length) {
     let spawnIndex = notVisibles.splice(
       randomInRange(0, notVisibles.length - 1),
@@ -160,6 +156,7 @@ const mainLoop = () => {
     spawnSpeed += 0.0001;
   }
 
+  // Cek jumlah object maksimal
   if (visibles.length == OBJECT_TOTAL) {
     gameOver = true;
     PLAY_BUTTON.disabled = false;
