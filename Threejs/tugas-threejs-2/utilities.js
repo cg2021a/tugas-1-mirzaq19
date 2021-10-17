@@ -31,6 +31,28 @@ const selectObject = (intersect, selected) => {
   });
 };
 
+const checkCouple = (selected, visibles, notVisibles) => {
+  if (selected[0].coupleColor == selected[1].coupleColor) {
+    console.log("cocok");
+    selected.forEach((item) => {
+      item.visible = false;
+      item.material.color.set(item.coupleColor);
+      item.click = false;
+      notVisibles.push(
+        ...visibles.splice(searchIndex(visibles, item.sceneIndex), 1)
+      );
+    });
+    return true;
+  } else {
+    console.log("salah");
+    selected.forEach((item) => {
+      item.material.color.set(item.coupleColor);
+      item.click = false;
+    });
+    return false;
+  }
+};
+
 const createCube = (color = Math.random() * 0xffffff) => {
   const cube = new THREE.Mesh(
     new THREE.BoxGeometry(3, 3, 3),

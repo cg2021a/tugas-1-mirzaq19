@@ -114,24 +114,7 @@ canvas.addEventListener("click", (e) => {
 
     //Cek pasangan yang diseleksi
     if (selected.length == 2) {
-      if (selected[0].coupleColor == selected[1].coupleColor) {
-        console.log("cocok");
-        selected.forEach((item) => {
-          item.visible = false;
-          item.material.color.set(item.coupleColor);
-          item.click = false;
-          notVisibles.push(
-            ...visibles.splice(searchIndex(visibles, item.sceneIndex), 1)
-          );
-        });
-        SCORE.innerHTML++;
-      } else {
-        console.log("salah");
-        selected.forEach((item) => {
-          item.material.color.set(item.coupleColor);
-          item.click = false;
-        });
-      }
+      if (checkCouple(selected, visibles, notVisibles)) SCORE.innerHTML++;
       selected = [];
     }
 
