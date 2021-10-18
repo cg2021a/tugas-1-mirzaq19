@@ -49,11 +49,13 @@ const mouse = new THREE.Vector2();
 mouse.x = mouse.y = -1;
 
 //=========== Interactive Action
+const OBJECT_TOTAL = 50;
 let gameOver,
   copBuffer,
   selected = [],
   spawnSpeed,
   bufferSpeed,
+  colorSet,
   visibles = [],
   notVisibles = [];
 
@@ -64,7 +66,7 @@ PLAY_BUTTON.addEventListener("click", () => {
   spawnSpeed = 0.005;
   bufferSpeed = 0;
   visibles = [];
-  currentColor = 0;
+  colorSet = randomSet(5);
   notVisibles = numberInRange(2, OBJECT_TOTAL + 1);
 
   for (; scene.children.length > 2; ) {
@@ -73,7 +75,7 @@ PLAY_BUTTON.addEventListener("click", () => {
 
   //========== Create Geometry
   for (let i = 1; i <= OBJECT_TOTAL / 2; i++) {
-    copBuffer = createCouple();
+    copBuffer = createCouple(colorSet);
     copBuffer[0].sceneIndex = 2 * i;
     copBuffer[1].sceneIndex = 2 * i + 1;
     scene.add(copBuffer[0]);

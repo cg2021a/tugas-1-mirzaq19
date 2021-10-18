@@ -13,6 +13,14 @@ const randomInRange = (from, to, convertInt = false) => {
   return x + from;
 };
 
+const randomSet = (num) => {
+  let buffer = [];
+  for (let i = 0; i < num; i++) {
+    buffer.push(Math.random());
+  }
+  return buffer;
+};
+
 const searchIndex = (arr, num) => {
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] == num) return i;
@@ -33,7 +41,6 @@ const selectObject = (intersect, selected) => {
 
 const checkCouple = (selected, visibles, notVisibles) => {
   if (selected[0].coupleColor == selected[1].coupleColor) {
-    console.log("cocok");
     selected.forEach((item) => {
       item.visible = false;
       item.material.color.set(item.coupleColor);
@@ -44,7 +51,6 @@ const checkCouple = (selected, visibles, notVisibles) => {
     });
     return true;
   } else {
-    console.log("salah");
     selected.forEach((item) => {
       item.material.color.set(item.coupleColor);
       item.click = false;
@@ -68,13 +74,9 @@ const createCube = (color = Math.random() * 0xffffff) => {
   return cube;
 };
 
-const OBJECT_TOTAL = 50;
-let colorSet = numberInRange(0, 1, 1 / (OBJECT_TOTAL / 2));
-let currentColor = 0;
-
-const createCouple = () => {
-  const randomColor = colorSet[currentColor] * 0xffffff;
-  currentColor++;
+const createCouple = (colorSet) => {
+  const randomColor =
+    colorSet[randomInRange(0, colorSet.length, true)] * 0xffffff;
   const couple = [];
   couple.push(createCube(randomColor), createCube(randomColor));
   return couple;
